@@ -1,0 +1,126 @@
+{
+  "name": "claude-usage",
+  "displayName": "Claude Usage",
+  "description": "Show your Claude Code rate limits from the claude CLI in the status bar and the sidebar.",
+  "publisher": "ichir0roie",
+  "license": "MIT",
+  "keywords": [
+    "claude",
+    "claude code",
+    "usage",
+    "rate limit"
+  ],
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "claudeUsage.refresh",
+        "title": "Refresh",
+        "category": "Claude Usage",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "claudeUsage.show",
+        "title": "Show Rate Limits",
+        "category": "Claude Usage"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "claudeUsage",
+          "title": "Claude Usage",
+          "icon": "resources/usage.svg"
+        }
+      ]
+    },
+    "views": {
+      "claudeUsage": [
+        {
+          "type": "webview",
+          "id": "claudeUsage.view",
+          "name": "Claude Usage"
+        }
+      ]
+    },
+    "menus": {
+      "view/title": [
+        {
+          "command": "claudeUsage.refresh",
+          "when": "view == claudeUsage.view",
+          "group": "navigation"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Claude Usage",
+      "properties": {
+        "claudeUsage.claudePath": {
+          "type": "string",
+          "default": "claude",
+          "description": "Path to the claude command. With the default value, ~/.local/bin/claude is used when it exists."
+        },
+        "claudeUsage.refreshInterval": {
+          "type": "number",
+          "default": 300,
+          "minimum": 60,
+          "description": "Seconds between automatic refreshes of the rate limits."
+        },
+        "claudeUsage.gaugeStyle": {
+          "type": "string",
+          "default": "parallelogram",
+          "enum": [
+            "parallelogram",
+            "block",
+            "line",
+            "square",
+            "circle",
+            "rectangle",
+            "none"
+          ],
+          "enumDescriptions": [
+            "▰▰▰▰▱▱▱▱▱▱",
+            "████░░░░░░",
+            "━━━━──────",
+            "■■■■□□□□□□",
+            "●●●●○○○○○○",
+            "▮▮▮▮▯▯▯▯▯▯",
+            "No gauge, percentage only"
+          ],
+          "description": "Characters used for the gauges in the status bar."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src",
+    "test": "node ./out/test/runTest.js",
+    "package": "vsce package"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.10",
+    "@types/node": "^22.20.5",
+    "@types/vscode": "1.90",
+    "@vscode/test-electron": "^2.5.2",
+    "@vscode/vsce": "^4.0.0",
+    "eslint": "^9.39.5",
+    "glob": "^11.1.0",
+    "mocha": "^11.8.0",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.71.1"
+  }
+}
