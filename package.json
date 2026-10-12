@@ -1,14 +1,29 @@
 {
-  "name": "claude-usage",
-  "displayName": "Claude Usage",
-  "description": "Show your Claude Code rate limits from the claude CLI in the status bar and the sidebar.",
+  "name": "claude-usage-statusbar-gauge",
+  "displayName": "Claude Usage Statusbar Gauge",
+  "description": "Gauges for your Claude Code rate limits in the status bar and the sidebar. Unofficial; reads what the claude CLI reports.",
   "publisher": "ichir0roie",
-  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ichir0roie/claude-usage.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ichir0roie/claude-usage/issues"
+  },
+  "homepage": "https://github.com/ichir0roie/claude-usage#readme",
+  "license": "Unlicense",
+  "icon": "resources/icon.png",
+  "galleryBanner": {
+    "color": "#1e1e1e",
+    "theme": "dark"
+  },
   "keywords": [
     "claude",
     "claude code",
     "usage",
-    "rate limit"
+    "rate limit",
+    "status bar",
+    "gauge"
   ],
   "version": "0.0.1",
   "engines": {
@@ -109,7 +124,8 @@
     "pretest": "npm run compile && npm run lint",
     "lint": "eslint src",
     "test": "node ./out/test/runTest.js",
-    "package": "vsce package"
+    "package": "vsce package",
+    "publish": "vsce publish"
   },
   "devDependencies": {
     "@types/mocha": "^10.0.10",

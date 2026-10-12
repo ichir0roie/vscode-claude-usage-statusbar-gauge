@@ -23,7 +23,7 @@ const USAGE_STREAM = [
 
 suite('Extension Test Suite', () => {
 	test('extension activates and registers commands', async () => {
-		const ext = vscode.extensions.getExtension('ichir0roie.claude-usage');
+		const ext = vscode.extensions.getExtension('ichir0roie.claude-usage-statusbar-gauge');
 		assert.ok(ext);
 		await ext.activate();
 		const commands = await vscode.commands.getCommands(true);

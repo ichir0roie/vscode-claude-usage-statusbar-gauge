@@ -8,3 +8,6 @@ out/test/**
 **/*.ts
 eslint.config.mjs
 TODO.md
+.github/**
+resources/icon.svg
+.gitattributes
