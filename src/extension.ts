@@ -1,3 +1,4 @@
+import * as fs from 'fs';
 import * as vscode from 'vscode';
 
 import { UsageStatusBar } from './lib/UsageStatusBar';
@@ -11,7 +12,10 @@ function refreshInterval(): number {
 }
 
 export function activate(context: vscode.ExtensionContext) {
-	const store = new UsageStore();
+	// claude はこの拡張専用のディレクトリで走らせる(ワークスペースや /tmp の設定を読ませない)
+	const cwd = context.globalStorageUri.fsPath;
+	fs.mkdirSync(cwd, { recursive: true, mode: 0o700 });
+	const store = new UsageStore(cwd);
 	const viewProvider = new UsageViewProvider(store);
 	const statusBar = new UsageStatusBar(store, SHOW_COMMAND);
 	context.subscriptions.push(

@@ -40,17 +40,17 @@ Claude Code on a Pro or Max plan has a session limit that resets every 5 hours a
 
 | Setting | Default | Description |
 | ------- | ------- | ----------- |
-| `claudeUsage.claudePath` | `claude` | Path to the `claude` command. With the default value, `~/.local/bin/claude` is used when it exists, because the extension host's `PATH` often does not include it. |
+| `claudeUsage.claudePath` | `claude` | Path to the `claude` command. With the default value, `~/.local/bin/claude` is used when it exists, because the extension host's `PATH` often does not include it. Only read from user settings, so a workspace's `.vscode/settings.json` cannot change which program runs. |
 | `claudeUsage.refreshInterval` | `300` | Seconds between automatic refreshes. At least 60. |
 | `claudeUsage.gaugeStyle` | `parallelogram` | Characters for the status bar gauges: `parallelogram` ▰▱, `block` █░, `line` ━─, `square` ■□, `circle` ●○, `rectangle` ▮▯, or `none` to show percentages instead. |
 
 ## How it works
 
-It runs `claude -p /usage --output-format stream-json --verbose --no-session-persistence` in the OS temp directory and reads `usage_report.rate_limits.limits` from the output.
+It runs `claude -p /usage --output-format stream-json --verbose --no-session-persistence --setting-sources user` in the extension's own storage directory and reads `usage_report.rate_limits.limits` from the output.
 
 - `/usage` is a local command of Claude Code, so no prompt is sent to the model and no tokens are used.
 - `--no-session-persistence` keeps these runs out of your session history.
-- It runs outside your workspace so that the project's Claude Code settings and hooks are not involved.
+- `--setting-sources user` and the private working directory keep Claude Code from loading project settings and hooks, either from your workspace or from a shared directory such as `/tmp`.
 - The extension itself sends nothing anywhere. The only network access is what the `claude` command does to fetch your usage.
 
 ## Known limitations
@@ -123,17 +123,17 @@ Pro や Max プランで Claude Code を使うと、5 時間ごとにリセッ�
 
 | 設定 | 既定値 | 説明 |
 | ---- | ------ | ---- |
-| `claudeUsage.claudePath` | `claude` | `claude` コマンドのパス。既定値のままなら、`~/.local/bin/claude` があればそれを使う(拡張ホストの `PATH` に入っていないことが多いため)。 |
+| `claudeUsage.claudePath` | `claude` | `claude` コマンドのパス。既定値のままなら、`~/.local/bin/claude` があればそれを使う(拡張ホストの `PATH` に入っていないことが多いため)。ユーザ設定からしか読まないので、ワークスペースの `.vscode/settings.json` で実行するプログラムを変えることはできない。 |
 | `claudeUsage.refreshInterval` | `300` | 自動更新の間隔(秒)。60 未満にはできない。 |
 | `claudeUsage.gaugeStyle` | `parallelogram` | ステータスバーのゲージの文字。`parallelogram` ▰▱、`block` █░、`line` ━─、`square` ■□、`circle` ●○、`rectangle` ▮▯。`none` ならゲージを出さず % だけ。 |
 
 ### 仕組み
 
-OS の一時ディレクトリで `claude -p /usage --output-format stream-json --verbose --no-session-persistence` を実行し、出力の `usage_report.rate_limits.limits` を読む。
+拡張機能専用の保存ディレクトリで `claude -p /usage --output-format stream-json --verbose --no-session-persistence --setting-sources user` を実行し、出力の `usage_report.rate_limits.limits` を読む。
 
 - `/usage` は Claude Code のローカルコマンドなので、モデルにプロンプトは送られず、トークンも使わない。
 - `--no-session-persistence` を付けているので、セッションの履歴には残らない。
-- ワークスペースの外で走らせるので、プロジェクトの Claude Code の設定やフックには関わらない。
+- `--setting-sources user` と専用のディレクトリで走らせることで、ワークスペースや `/tmp` のような共有の場所にあるプロジェクトの設定やフックを Claude Code に読ませない。
 - 拡張機能そのものはどこにも何も送らない。ネットワークに出るのは、`claude` コマンドが使用状況を取りに行く分だけ。
 
 ### 制限事項

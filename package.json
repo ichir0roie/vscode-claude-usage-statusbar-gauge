@@ -83,7 +83,8 @@
         "claudeUsage.claudePath": {
           "type": "string",
           "default": "claude",
-          "description": "Path to the claude command. With the default value, ~/.local/bin/claude is used when it exists."
+          "scope": "machine",
+          "description": "Path to the claude command. With the default value, ~/.local/bin/claude is used when it exists. Only read from user settings, so a workspace cannot change which program runs."
         },
         "claudeUsage.refreshInterval": {
           "type": "number",
@@ -135,7 +136,7 @@
     "@vscode/vsce": "^4.0.0",
     "eslint": "^9.39.5",
     "glob": "^11.1.0",
-    "mocha": "^11.8.0",
+    "mocha": "^12.0.3",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.71.1"
   }

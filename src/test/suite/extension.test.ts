@@ -2,7 +2,7 @@ import * as assert from 'assert';
 import * as vscode from 'vscode';
 
 import { parseRateLimits, RateLimit } from '../../lib/Collect';
-import { formatDuration, formatResetShort, gauge, limitsMarkdown, statusText, worstLevel } from '../../lib/Format';
+import { escapeMarkdown, formatDuration, formatResetShort, gauge, limitsMarkdown, statusText, worstLevel } from '../../lib/Format';
 import { renderUsageHtml } from '../../lib/UsageHtml';
 
 function limit(kind: string, percent: number, severity = 'normal'): RateLimit {
@@ -64,6 +64,7 @@ suite('Extension Test Suite', () => {
 		assert.strictEqual(formatDuration((3 * 24 + 5) * 3600000), '3d 5h');
 		assert.strictEqual(formatDuration(-1), 'now');
 		assert.ok(limitsMarkdown(LIMITS).includes('| Fable limit | 0% |'));
+		assert.strictEqual(escapeMarkdown('[x](command:y) | *z*'), '\\[x\\]\\(command:y\\) \\| \\*z\\*');
 	});
 
 	test('renderUsageHtml draws a gauge per limit', () => {
@@ -75,5 +76,7 @@ suite('Extension Test Suite', () => {
 		assert.ok(renderUsageHtml({ limits: [] }).includes('Loading...'));
 		const failed = renderUsageHtml({ limits: LIMITS.slice(0, 1), error: '<timeout>' });
 		assert.ok(failed.includes('Session (5hr)') && failed.includes('&lt;timeout&gt;'));
+		const odd = renderUsageHtml({ limits: [{ ...LIMITS[0], percent: '<b>' as unknown as number }], updatedAt: new Date() });
+		assert.ok(odd.includes('&lt;b&gt;%') && !odd.includes('<b>'));
 	});
 });

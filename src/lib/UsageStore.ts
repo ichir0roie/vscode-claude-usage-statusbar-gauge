@@ -17,6 +17,9 @@ export class UsageStore implements vscode.Disposable {
 	private pending?: Promise<void>;
 	private timer?: ReturnType<typeof setInterval>;
 
+	// cwd は claude を走らせるディレクトリ
+	constructor(private readonly cwd: string) { }
+
 	// 取得中に何度呼ばれても、コマンドは 1 回分だけ走らせる
 	refresh(): Promise<void> {
 		this.pending ??= this.load().finally(() => {
@@ -28,7 +31,7 @@ export class UsageStore implements vscode.Disposable {
 	private async load() {
 		const claudePath = vscode.workspace.getConfiguration('claudeUsage').get<string>('claudePath');
 		try {
-			this.state = { limits: await fetchRateLimits(claudePath), updatedAt: new Date() };
+			this.state = { limits: await fetchRateLimits(this.cwd, claudePath), updatedAt: new Date() };
 		} catch (e) {
 			this.state = { ...this.state, error: (e as Error).message };
 		}

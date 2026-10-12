@@ -42,7 +42,7 @@ export function renderUsageHtml(state: UsageState, now = new Date()): string {
 		const resetsAt = l.resets_at ? new Date(l.resets_at).toLocaleString() : '';
 		const reset = l.resets_at ? `Resets ${formatResetShort(l.resets_at, now)}` : '';
 		return `<div class="limit ${limitLevel(l)}" title="${escapeHtml(resetsAt)}">
-	<div class="head"><span class="label">${escapeHtml(limitLabel(l))}</span><span>${l.percent}%</span></div>
+	<div class="head"><span class="label">${escapeHtml(limitLabel(l))}</span><span>${escapeHtml(String(l.percent))}%</span></div>
 	<div class="track"><div class="fill" style="width: ${width}%"></div></div>
 	<div class="reset">${escapeHtml(reset)}</div>
 </div>`;

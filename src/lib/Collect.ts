@@ -17,8 +17,10 @@ export interface RateLimit {
 	is_active: boolean;
 }
 
-// /usage はローカルコマンドなのでモデルは呼ばない(total_cost_usd は 0)
-const USAGE_ARGS = ['-p', '/usage', '--output-format', 'stream-json', '--verbose', '--no-session-persistence'];
+// /usage はローカルコマンドなのでモデルは呼ばない(total_cost_usd は 0)。
+// -p では信頼の確認が出ないまま、カレントディレクトリの .claude/settings.json のフックまで走るので、ユーザの設定だけを読ませる
+const USAGE_ARGS = ['-p', '/usage', '--output-format', 'stream-json', '--verbose', '--no-session-persistence',
+	'--setting-sources', 'user'];
 
 // 拡張ホストの PATH には ~/.local/bin が入っていないことがあるので、既定値のときはそこも見る
 export function resolveClaude(configured: string | undefined): string {
@@ -45,12 +47,12 @@ export function parseRateLimits(stdout: string): RateLimit[] {
 	throw new Error('usage_report not found in /usage output');
 }
 
-export async function fetchRateLimits(claudePath?: string): Promise<RateLimit[]> {
+// cwd は自分しか書き込めないディレクトリにする。/tmp のような共有の場所だと、他のユーザが置いた設定を読みかねない
+export async function fetchRateLimits(cwd: string, claudePath?: string): Promise<RateLimit[]> {
 	let stdout: string;
 	try {
-		// /usage はカレントディレクトリのプロジェクト設定を読むので、ワークスペースの外で走らせる
 		({ stdout } = await execFileAsync(resolveClaude(claudePath), USAGE_ARGS,
-			{ cwd: os.tmpdir(), timeout: 30000, maxBuffer: 10 * 1024 * 1024 }));
+			{ cwd, timeout: 30000, maxBuffer: 10 * 1024 * 1024 }));
 	} catch (e) {
 		const err = e as { stderr?: string; message: string };
 		throw new Error((err.stderr || err.message).trim().split('\n')[0]);

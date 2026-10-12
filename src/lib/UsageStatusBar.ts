@@ -34,7 +34,9 @@ export class UsageStatusBar implements vscode.Disposable {
 		this.item.backgroundColor = BACKGROUNDS[worstLevel(limits)];
 		const md = new vscode.MarkdownString(limitsMarkdown(limits));
 		if (error) {
-			md.appendMarkdown(`\n\n$(error) ${error}`);
+			// エラーは claude の stderr なので、Markdown として解釈させない
+			md.appendMarkdown('\n\n$(error) ');
+			md.appendText(error);
 		}
 		if (updatedAt) {
 			md.appendMarkdown(`\n\nupdated ${formatDateTime(updatedAt)}`);

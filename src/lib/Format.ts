@@ -96,6 +96,11 @@ export function statusText(limits: RateLimit[], style = DEFAULT_GAUGE_STYLE): st
 	return parts.length ? parts.join(' / ') : '--';
 }
 
+// claude の出力をそのまま Markdown に入れないよう、記号を文字として出す
+export function escapeMarkdown(s: string): string {
+	return s.replace(/[\\`*_{}[\]()#+\-.!|<>$~]/g, '\\$&');
+}
+
 export function limitsMarkdown(limits: RateLimit[], now = new Date()): string {
 	if (!limits.length) {
 		return 'No rate limits reported.';
@@ -103,6 +108,6 @@ export function limitsMarkdown(limits: RateLimit[], now = new Date()): string {
 	return [
 		'| | used | resets |',
 		'| --- | ---: | --- |',
-		...limits.map(l => `| ${limitLabel(l)} | ${l.percent}% | ${formatReset(l.resets_at, now)} |`),
+		...limits.map(l => `| ${escapeMarkdown(limitLabel(l))} | ${escapeMarkdown(String(l.percent))}% | ${formatReset(l.resets_at, now)} |`),
 	].join('\n');
 }
