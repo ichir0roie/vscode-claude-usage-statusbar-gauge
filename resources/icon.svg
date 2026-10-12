@@ -1,13 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
 	<rect width="128" height="128" rx="26" fill="#1e1e1e"/>
-	<polygon points="18.0,34 34.0,34 28.0,56 12.0,56" fill="#e8e8e8"/>
-	<polygon points="38.0,34 54.0,34 48.0,56 32.0,56" fill="#e8e8e8"/>
-	<polygon points="58.0,34 74.0,34 68.0,56 52.0,56" fill="#e8e8e8"/>
-	<polygon points="78.0,34 94.0,34 88.0,56 72.0,56" fill="#e8e8e8"/>
-	<polygon points="98.0,34 114.0,34 108.0,56 92.0,56" fill="none" stroke="#7a7a7a" stroke-width="3" stroke-linejoin="round"/>
-	<polygon points="18.0,72 34.0,72 28.0,94 12.0,94" fill="#e8e8e8"/>
-	<polygon points="38.0,72 54.0,72 48.0,94 32.0,94" fill="#e8e8e8"/>
-	<polygon points="58.0,72 74.0,72 68.0,94 52.0,94" fill="none" stroke="#7a7a7a" stroke-width="3" stroke-linejoin="round"/>
-	<polygon points="78.0,72 94.0,72 88.0,94 72.0,94" fill="none" stroke="#7a7a7a" stroke-width="3" stroke-linejoin="round"/>
-	<polygon points="98.0,72 114.0,72 108.0,94 92.0,94" fill="none" stroke="#7a7a7a" stroke-width="3" stroke-linejoin="round"/>
+	<polygon points="20.0,44 48.0,44 40.0,84 12.0,84" fill="#e8e8e8"/>
+	<polygon points="54.0,44 82.0,44 74.0,84 46.0,84" fill="#e8e8e8"/>
+	<polygon points="88.0,44 116.0,44 108.0,84 80.0,84" fill="none" stroke="#7a7a7a" stroke-width="3" stroke-linejoin="round"/>
 </svg>
