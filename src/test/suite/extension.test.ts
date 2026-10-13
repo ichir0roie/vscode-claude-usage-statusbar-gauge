@@ -38,7 +38,7 @@ suite('Extension Test Suite', () => {
 	});
 
 	test('statusText shows the session and weekly limits', () => {
-		assert.strictEqual(statusText(LIMITS), 'S ▰▰▰▰▱▱▱▱▱▱ / W ▰▰▰▰▱▱▱▱▱▱');
+		assert.strictEqual(statusText(LIMITS), 'S ▰▰▰▰▱▱▱▱▱▱ / W ▰▰▰▱▱▱▱');
 		assert.strictEqual(statusText(LIMITS, 'none'), 'S 39% / W 41%');
 		assert.strictEqual(statusText([]), '--');
 	});
