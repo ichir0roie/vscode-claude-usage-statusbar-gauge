@@ -5,6 +5,8 @@ export type Level = 'normal' | 'warning' | 'error';
 
 // ステータスバーに出す枠と、そこでの短い名前
 const SHORT_LABELS: Record<string, string> = { session: 'S', weekly_all: 'W' };
+// ステータスバーのゲージのマス数。週の枠は 1 日 1 マスで 7
+const GAUGE_WIDTHS: Record<string, number> = { weekly_all: 7 };
 
 function pad(n: number): string {
 	return String(n).padStart(2, '0');
@@ -89,10 +91,10 @@ export function gauge(percent: number, style = DEFAULT_GAUGE_STYLE, width = 10):
 	return chars[0].repeat(filled) + chars[1].repeat(width - filled);
 }
 
-// 「S ▰▰▰▰▰▱▱▱▱▱ / W ▰▰▰▰▱▱▱▱▱▱」。ゲージを出さない設定のときだけ「S 46% / W 40%」
+// 「S ▰▰▰▰▰▱▱▱▱▱ / W ▰▰▰▱▱▱▱」。ゲージを出さない設定のときだけ「S 46% / W 40%」
 export function statusText(limits: RateLimit[], style = DEFAULT_GAUGE_STYLE): string {
 	const parts = limits.filter(l => SHORT_LABELS[l.kind])
-		.map(l => `${SHORT_LABELS[l.kind]} ${gauge(l.percent, style) || `${l.percent}%`}`);
+		.map(l => `${SHORT_LABELS[l.kind]} ${gauge(l.percent, style, GAUGE_WIDTHS[l.kind]) || `${l.percent}%`}`);
 	return parts.length ? parts.join(' / ') : '--';
 }
 

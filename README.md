@@ -12,7 +12,7 @@ Claude Code on a Pro or Max plan has a session limit that resets every 5 hours a
 
 ## Features
 
-- Status bar: `S ▰▰▰▰▰▱▱▱▱▱ / W ▰▰▰▰▱▱▱▱▱▱`, gauges for the current session (S, 5-hour) limit and the weekly (W) limit for all models. With `gaugeStyle` set to `none` it shows `S 46% / W 40%` instead. Hover for every limit and its reset time. Click to open the sidebar view.
+- Status bar: `S ▰▰▰▰▰▱▱▱▱▱ / W ▰▰▰▱▱▱▱`, gauges for the current session (S, 5-hour) limit and the weekly (W) limit for all models. The weekly gauge has 7 cells, one per day. With `gaugeStyle` set to `none` it shows `S 46% / W 40%` instead. Hover for every limit and its reset time. Click to open the sidebar view.
 - Sidebar: a "Claude Usage" view in the Activity Bar that shows every limit as a horizontal gauge in a monospace font, with the percentage and the time until reset, like the Usage panel of claude.ai. Hover a limit for the exact reset time.
 - The status bar turns yellow when a limit's severity is not normal, and red when a limit reaches 100%.
 - Refreshed every 5 minutes (configurable), when the view is shown, and with the refresh button in the view title.
@@ -95,7 +95,7 @@ Pro や Max プランで Claude Code を使うと、5 時間ごとにリセッ�
 
 ### 特徴
 
-- ステータスバー: `S ▰▰▰▰▰▱▱▱▱▱ / W ▰▰▰▰▱▱▱▱▱▱` のように、現在のセッション枠(S、5 時間)と週の枠(W、全モデル)の使用率をゲージで出す。`gaugeStyle` を `none` にすると、代わりに `S 46% / W 40%` と出す。カーソルを乗せると全部の枠とリセット時刻が出る。クリックでサイドバーのビューを開く。
+- ステータスバー: `S ▰▰▰▰▰▱▱▱▱▱ / W ▰▰▰▱▱▱▱` のように、現在のセッション枠(S、5 時間)と週の枠(W、全モデル)の使用率をゲージで出す。週の枠のゲージは 1 日 1 マスの 7 マス。`gaugeStyle` を `none` にすると、代わりに `S 46% / W 40%` と出す。カーソルを乗せると全部の枠とリセット時刻が出る。クリックでサイドバーのビューを開く。
 - サイドバー: アクティビティバーの「Claude Usage」ビューに、claude.ai の Usage 表示と同じ形で、全部の枠を等幅フォントの横ゲージと %、リセットまでの時間で並べる。カーソルを乗せるとリセット時刻が出る。
 - severity が normal 以外になるとステータスバーが黄色に、どれかの枠が 100% になると赤になる。
 - 5 分ごと(設定で変えられる)、ビューを表示したとき、タイトルの更新ボタンを押したときに取り直す。
